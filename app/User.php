@@ -32,8 +32,20 @@ class User extends Authenticatable
         return $this->belongsTo('App\UserRole', 'role_id', 'id');
     }
 
-    public function todos ()
+    public function projects ()
     {
-        return $this->hasMany('App\Todo');
+        return $this->hasMany('App\Project');
+    }
+
+    public function todo_counts()
+    {
+        $projects = $this->projects()->get();
+        $count = 0;
+
+        foreach ($projects as $key => $project) {
+          $count = $count + $project->todos()->count();
+        }
+        
+        return $count;
     }
 }

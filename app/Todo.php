@@ -8,8 +8,13 @@ class Todo extends Model
 {
     protected $table = 'todos';
 
-    public function user ()
+    public function project ()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Project');
+    }
+
+    public function priority ()
+    {
+        return $this->belongsTo('App\Priority');
     }
 }

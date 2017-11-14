@@ -10,7 +10,7 @@
         "prod": "npm run production"
     },
     "devDependencies": {
-        "axios": "^0.17",
+        "axios": "^0.17.1",
         "browser-sync": "^2.18.13",
         "browser-sync-webpack-plugin": "^1.2.0",
         "cross-env": "^5.1",
@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "bootstrap": "^4.0.0-beta.2",
+        "font-awesome": "^4.7.0",
         "gsap": "^1.20.3",
         "popper.js": "^1.12.7"
     }

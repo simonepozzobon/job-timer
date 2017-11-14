@@ -30,13 +30,13 @@ class HomeController extends Controller
         if ($user->role_id != 1) {
 
           // User Panel
-          $todos = Todo::where('user_id', '=', $user->id)->get();
-          return view('user_panel', compact('todos'));
+          $projects = Project::where('user_id', '=', $user->id)->with('todos')->get();
+          return view('user_panel', compact('projects'));
 
         } else {
 
           // Admin Panel
-          $users = User::where('role_id', '!=', 1)->get();
+          $users = User::where('role_id', '!=', 1)->with('projects', 'projects.todos')->get();
           return view('admin_panel', compact('users'));
 
         }

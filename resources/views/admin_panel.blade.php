@@ -11,7 +11,7 @@
             {{ $user->name }}
           </div>
           <div class="col-md-2">
-            6
+            {{ $user->todo_counts() }}
           </div>
           <div class="col-md-2">
             <a href="{{ route('user.single', $user->id) }}" class="btn btn-primary">Apri</a>

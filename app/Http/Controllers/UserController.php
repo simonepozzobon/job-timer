@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use App\User;
 use App\Todo;
+use App\Project;
+use App\Priority;
 use Carbon\Carbon;
 use App\TodoStatus;
 use Illuminate\Http\Request;
@@ -20,18 +22,26 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $statuses = TodoStatus::all();
-        $tds = Todo::where('user_id', '=', $id)->get();
+        $priorities = Priority::all();
 
-        $todos = $tds->transform(function($td, $key) {
-          $dt = new Carbon($td->created_at);
-          $td->time = $dt->diffForHumans();
-          return $td;
-        });
+        $projects = Project::where('user_id', '=', $id)->with('todos')->get();
+
+        foreach ($projects as $key => $project) {
+            $project->todos = $project->todos->transform(function($td, $key) {
+                $dt = new Carbon($td->created_at);
+                $td->time = $dt->diffForHumans();
+                return $td;
+            });
+        }
+
+        $main_project = $projects->filter(function($project, $key) {
+            return $project->is_main == 1;
+        })->first();
 
         if (Auth::user()->role_id != 1) {
-          return view('users.single', compact('user', 'todos', 'statuses'));
+          return view('users.single', compact('user', 'projects', 'main_project', 'statuses', 'priorities'));
         } else {
-          return view('admin.single', compact('user', 'todos', 'statuses'));
+          return view('admin.single', compact('user', 'projects', 'main_project', 'statuses', 'priorities'));
         }
 
     }

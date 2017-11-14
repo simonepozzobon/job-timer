@@ -3,11 +3,18 @@
 @section('content')
 
   <div id="app" class="row">
-    <div class="col">
+    <div class="col-md-8">
       <todo
-        todos="{{ json_encode($todos) }}"
+        project="{{ json_encode($main_project) }}"
         statuses="{{ json_encode($statuses) }}"
+        priorities="{{ json_encode($priorities) }}"
       ></todo>
+    </div>
+    <div class="col-md-4">
+      <projects
+        projects="{{ json_encode($projects) }}"
+      >
+      </projects>
     </div>
   </div>
 
