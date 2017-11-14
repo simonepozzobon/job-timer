@@ -16,15 +16,9 @@ export default {
   data: () => ({
     projectSelected: '',
   }),
-  computed: {
-      projectParsed: function()
-      {
-          return JSON.parse(this.project);
-      }
-  },
   mounted() {
     var vue = this;
-    this.projectSelected = this.projectParsed;
+    this.projectSelected = this.project;
     console.log(this.projectSelected);
 
     this.$parent.$on('project-selected', function(project) {

@@ -16,15 +16,9 @@ export default {
   data: () => ({
       categories: []
   }),
-  computed: {
-      main_categoriesParsed: function()
-      {
-          return JSON.parse(this.main_categories);
-      }
-  },
   mounted() {
       var vue = this;
-      this.categories = this.main_categoriesParsed;
+      this.categories = this.main_categories;
 
       this.$parent.$on('project-selected', function(project) {
           vue.changeProject(project);

@@ -44,10 +44,6 @@ export default {
     projectSelected: ''
   }),
   computed: {
-    projectParsed: function()
-    {
-        return JSON.parse(this.project);
-    },
     statusesParsed: function()
     {
         return JSON.parse(this.statuses);
@@ -58,9 +54,8 @@ export default {
     },
   },
   mounted() {
-
       var vue = this;
-      this.projectSelected = this.projectParsed;
+      this.projectSelected = this.project;
       this.todos = this.projectSelected.todos;
       this.archived = this.projectSelected.archived_todos;
 
