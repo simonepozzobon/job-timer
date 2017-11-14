@@ -1,9 +1,5 @@
 <template>
-  <div id="todo-new">
-    <div id="btn" ref="btn">
-      <button @click="showNew" class="btn btn-primary">Nuovo</button>
-    </div>
-    <div id="new" ref="new">
+    <div id="new" ref="new" class="pt-4">
       <div class="close mb-2">
         <button @click="hideNew" class="btn"><i class="fa fa-times"></i></button>
       </div>
@@ -26,7 +22,6 @@
       </div>
       <button class="btn btn-primary" @click="saveTodo">Aggiungi</button>
     </div>
-  </div>
 </template>
 <script>
 import {TweenMax, TimelineMax, Power4} from 'gsap'
@@ -46,18 +41,15 @@ export default {
           return JSON.parse(this.project);
       },
   },
+  mounted() {
+    var vue = this;
+    this.$parent.$on('show-new-todo', function() {
+      vue.showNew();
+    });
+  },
   methods: {
       showNew()
       {
-          var master = new TimelineMax();
-
-          var t1 = new TimelineMax();
-          t1.to(this.$refs.btn, .4, {
-            opacity: 0,
-            display: 'none',
-            ease: Power4.easeInOut
-          });
-
           var t2 = new TimelineMax();
           t2.to(this.$refs.new, .4, {
             opacity: 1,
@@ -65,22 +57,10 @@ export default {
             ease: Power4.easeInOut
           });
 
-          master.add(t1);
-          master.add(t2, .5);
-          master.play();
       },
 
       hideNew()
       {
-          var master = new TimelineMax();
-
-          var t1 = new TimelineMax();
-          t1.to(this.$refs.btn, .4, {
-            opacity: 1,
-            display: 'inherit',
-            ease: Power4.easeInOut
-          });
-
           var t2 = new TimelineMax();
           t2.to(this.$refs.new, .4, {
             opacity: 0,
@@ -88,9 +68,6 @@ export default {
             ease: Power4.easeInOut
           });
 
-          master.add(t2);
-          master.add(t1, .4);
-          master.play();
       },
 
       saveTodo()
@@ -104,7 +81,7 @@ export default {
 
           axios.post('/api/v1/todo/add', formData)
           .then(function(response) {
-            vue.$parent.$emit('new-todo', response.data);
+            vue.$parent.$parent.$emit('new-todo', response.data);
             vue.hideNew();
             vue.todo_description = '';
           })

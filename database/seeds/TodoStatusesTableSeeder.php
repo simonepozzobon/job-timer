@@ -12,10 +12,22 @@ class TodoStatusesTableSeeder extends Seeder
     public function run()
     {
         DB::table('todo_statuses')->insert([
-          ['name' => 'Completato'],
-          ['name' => 'Lavorazione'],
-          ['name' => 'Problema'],
-          ['name' => 'Attesa'],
+          [
+            'name' => 'Completato',
+            'color' => 'green',
+          ],
+          [
+            'name' => 'Lavorazione',
+            'color' => 'yellow'
+          ],
+          [
+            'name' => 'Problema'
+            'color' => 'red'
+          ],
+          [
+            'name' => 'Attesa'
+            'color' => 'blue'
+          ],
         ]);
     }
 }

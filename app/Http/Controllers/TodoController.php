@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Todo;
+use App\Project;
 use App\UserRole;
 use Carbon\Carbon;
 use App\TodoStatus;
@@ -55,5 +56,46 @@ class TodoController extends Controller
           'success' => true,
           'id' => $request->id
         ], 200);
+    }
+
+    public function archive(Request $request)
+    {
+        $todo = Todo::find($request->id);
+        $todo->archived = 1;
+        $todo->save();
+
+        return response()->json([
+          'success' => true,
+          'id' => $request->id,
+        ], 200);
+    }
+
+    public function unarchive(Request $request)
+    {
+        $todo = Todo::find($request->id);
+        $todo->archived = 0;
+        $todo->save();
+
+        return response()->json([
+          'success' => true,
+          'id' => $request->id,
+        ], 200);
+    }
+
+    public function order(Request $request)
+    {
+        $todos = Todo::where('project_id', '=', $request->project_id)->get();
+        $sortedTodos = json_decode($request->todos);
+
+        foreach ($sortedTodos as $key => $sTodo) {
+          $todo = Todo::find($sTodo->id);
+          $todo->order = $key;
+          $todo->save();
+        }
+
+        return response()->json([
+          'success' => true
+        ], 200);
+
     }
 }

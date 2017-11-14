@@ -24,12 +24,38 @@ class UserController extends Controller
         $statuses = TodoStatus::all();
         $priorities = Priority::all();
 
-        $projects = Project::where('user_id', '=', $id)->with('todos')->get();
+        $projects = Project::where('user_id', '=', $id)->with('todos', 'archived_todos')->get();
 
         foreach ($projects as $key => $project) {
             $project->todos = $project->todos->transform(function($td, $key) {
+
+                // Tempo trascorso dalla creazione del todo
                 $dt = new Carbon($td->created_at);
                 $td->time = $dt->diffForHumans();
+
+                // Verifica se ha un timer attivo
+                $timer = [
+                  'status' => $td->has_active_timer(),
+                  'time' => $td->calculate_timer()
+                ];
+                $td->timer = $timer;
+
+                return $td;
+            });
+
+            $project->archived_todos = $project->archived_todos->transform(function($td, $key) {
+
+                // Tempo trascorso dalla creazione del todo
+                $dt = new Carbon($td->created_at);
+                $td->time = $dt->diffForHumans();
+
+                // Verifica se ha un timer attivo
+                $timer = [
+                  'status' => $td->has_active_timer(),
+                  'time' => $td->calculate_timer()
+                ];
+                $td->timer = $timer;
+
                 return $td;
             });
         }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimersTable extends Migration
+class AddOrderToTodos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateTimersTable extends Migration
      */
     public function up()
     {
-        Schema::create('timers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('todo_id');
-            $table->boolean('active')->default(1);
-            $table->time('time')->nullable();
-            $table->timestamps();
+        Schema::table('todos', function (Blueprint $table) {
+            $table->integer('order')->after('id')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateTimersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timers');
+        Schema::table('todos', function (Blueprint $table) {
+            $table->dropColumn('order');
+        });
     }
 }

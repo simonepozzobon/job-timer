@@ -17,7 +17,7 @@
       @include('layouts.main._menu')
 
       {{-- Content --}}
-      <div class="container">
+      <div class="container py-5">
         @yield('content')
       </div>
 

@@ -36,7 +36,7 @@ class HomeController extends Controller
         } else {
 
           // Admin Panel
-          $users = User::where('role_id', '!=', 1)->with('projects', 'projects.todos')->get();
+          $users = User::where('role_id', '!=', 1)->with('projects', 'projects.todos', 'projects.archived_todos')->get();
           return view('admin_panel', compact('users'));
 
         }

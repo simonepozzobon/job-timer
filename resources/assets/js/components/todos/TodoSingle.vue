@@ -1,27 +1,31 @@
 <template>
   <div id="" class="draggable">
     <hr>
-    <div class="row" ref="edit" @click="edit">
-      <div class="col-md-1">
-        {{todo.id}}
-      </div>
-      <div class="col-md-3">
+    <div class="row align-items-center" ref="edit" @click="edit">
+      <div :class="'col-md-2 text-center bg-'+priority.color_class">
         {{priority.title}}
+      </div>
+      <div class="col-md-2 text-center">
+        {{todo.time}}
       </div>
       <div class="col-md-4">
         {{todo.description}}
       </div>
-      <div class="col-md-2">
-        {{todo.time}}
-      </div>
-      <div class="col-md-2">
+      <div :class="'col-md-2 text-center bg-'+status.color_class">
         {{status.name}}
+      </div>
+      <div class="col-md-2 text-center">
+        {{timer}}
       </div>
     </div>
     <div id="tools" class="row justify-content-center" ref="tools">
-      <div class="col">
+      <div class="col-md-6">
+        <button class="btn btn-primary" @click="play" v-if="!timer_status"><i class="fa fa-play"></i></button>
+        <button class="btn btn-secondary" @click="pause" v-else><i class="fa fa-pause"></i></button>
         <button class="btn btn-info" @click="update"><i class="fa fa-edit"></i></button>
         <button class="btn btn-danger" @click="confirm"><i class="fa fa-trash-o"></i></button>
+        <button class="btn btn-success" @click="archive" v-if="todo.archived != 1"><i class="fa fa-download"></i></button>
+        <button class="btn btn-success" @click="unarchive" v-else><i class="fa fa-upload"></i></button>
         <button class="btn btn-warning" @click="undo"><i class="fa fa-undo"></i></button>
       </div>
     </div>
@@ -61,7 +65,7 @@ import {TweenMax, Power4, TimelineMax} from 'gsap'
 
 export default {
   name: "todo-single",
-  props: ['todo', 'statuses', 'priorities'],
+  props: ['todo', 'statuses', 'priorities', 'order'],
   computed: {
     status: function()
     {
@@ -76,22 +80,66 @@ export default {
         return _.find(this.priorities, function(r) {
             return r.id == vue.todo.priority_id;
         });
+    },
+    timer: function()
+    {
+      if (this.todo.timer.status) {
+        this.timer_status = true;
+        return this.todo.timer.time;
+      } else {
+        this.timer_status = false;
+        return this.todo.timer.time || null;
+      }
     }
-  },
-  watch: {
-
   },
   data: () => ({
     todo_description: '',
     todo_status: '',
     todo_priority: '',
+    timer_status: '',
   }),
   mounted() {
       this.todo_description = this.todo.description;
       this.todo_priority = this.todo.priority_id;
       this.todo_status = this.todo.status_id;
+
+
   },
   methods: {
+      play()
+      {
+          var vue = this;
+          var formData = new FormData();
+          formData.append('id', this.todo.id);
+
+          axios.post('/api/v1/timer/play', formData)
+          .then(function(response) {
+            console.log(response);
+            vue.close();
+            vue.timer_status = true;
+          })
+          .catch(function(errors) {
+            console.log(errors);
+          });
+      },
+
+      pause()
+      {
+          var vue = this;
+          var formData = new FormData();
+          formData.append('id', 1);
+
+          axios.post('/api/v1/timer/pause', formData)
+          .then(function(response) {
+            console.log(response);
+            vue.close();
+            vue.timer_status = false;
+          })
+          .catch(function(errors) {
+            console.log(errors);
+          });
+      },
+
       edit()
       {
           var master = new TimelineMax();
@@ -148,6 +196,38 @@ export default {
             vue.todo.priority_id = vue.todo_priority;
             vue.todo.status_id = vue.todo_status;
             vue.close();
+          })
+          .catch(function(errors) {
+            console.log(errors);
+          });
+      },
+
+      archive()
+      {
+          var vue = this;
+          var formData = new FormData();
+          formData.append('id', this.todo.id);
+          axios.post('/api/v1/todo/archive', formData)
+          .then(function(response) {
+            console.log(response);
+            vue.close();
+            vue.$parent.$parent.$emit('todo-archived', parseInt(response.data.id));
+          })
+          .catch(function(errors) {
+            console.log(errors);
+          });
+      },
+
+      unarchive()
+      {
+          var vue = this;
+          var formData = new FormData();
+          formData.append('id', this.todo.id);
+          axios.post('/api/v1/todo/unarchive', formData)
+          .then(function(response) {
+            console.log(response);
+            vue.close();
+            vue.$parent.$parent.$emit('todo-unarchived', parseInt(response.data.id));
           })
           .catch(function(errors) {
             console.log(errors);
@@ -227,7 +307,7 @@ export default {
           .then(function(response) {
             console.log(response);
             vue.close();
-            vue.$parent.$emit('todo-deleted', parseInt(response.data.id));
+            vue.$parent.$parent.$emit('todo-deleted', parseInt(response.data.id));
           })
           .catch(function(errors) {
             console.log(errors);

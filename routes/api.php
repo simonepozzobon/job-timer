@@ -14,9 +14,18 @@ use Illuminate\Http\Request;
 */
 
 Route::prefix('v1')->group(function() {
+
     Route::post('/todo/add', 'TodoController@create');
     Route::post('/todo/destroy', 'TodoController@destroy');
     Route::post('/todo/update', 'TodoController@update');
+
+    Route::post('/todo/archive', 'TodoController@archive');
+    Route::post('/todo/unarchive', 'TodoController@unarchive');
+    Route::post('/todo/order', 'TodoController@order');
+
+    Route::post('/timer/play', 'TimerController@play');
+    Route::post('/timer/pause', 'TimerController@pause');
+
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

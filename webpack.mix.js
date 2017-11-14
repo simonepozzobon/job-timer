@@ -22,6 +22,6 @@ mix
       'popper.js/dist/umd/popper.js': ['Popper'],
   })
   .browserSync({
-    proxy: 'http://www.timer.dev:8888/',
+    proxy: 'http://www.timer.dev:8080/',
     browser: 'google chrome'
   });

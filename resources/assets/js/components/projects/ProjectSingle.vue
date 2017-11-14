@@ -7,6 +7,7 @@
     </div>
     <div id="tools" class="row justify-content-center" ref="tools">
       <div class="col">
+        <button class="btn btn-success" @click="select"><i class="fa fa-check"></i></button>
         <button class="btn btn-primary"><i class="fa fa-info"></i></button>
         <button class="btn btn-info"><i class="fa fa-edit"></i></button>
         <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
@@ -25,6 +26,12 @@ export default {
 
   }),
   methods: {
+      select()
+      {
+        this.$parent.$parent.$emit('project-selected', this.project);
+        this.close();
+      },
+
       tools()
       {
           var master = new TimelineMax();
