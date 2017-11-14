@@ -60,6 +60,17 @@ class Todo extends Model
       return $this;
     }
 
+    public function has_timer()
+    {
+        $timer = $this->timers()->first();
+
+        if ($timer != null) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+
     public function has_active_timer()
     {
         $timer = $this->timers()->where('active', '=', 1)->first();

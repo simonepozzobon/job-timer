@@ -23,15 +23,17 @@ export default {
       }
   },
   mounted() {
+      var vue = this;
       this.categories = this.main_categoriesParsed;
 
       this.$parent.$on('project-selected', function(project) {
-          if (project.categories.lenght > 0) {
-            this.categories = project.categories;
-          } else {
-            this.categories = [];
-          }
+          vue.changeProject(project);
       });
+  },
+  methods: {
+      changeProject(project) {
+          this.categories = project.categories;
+      }
   },
   components: {
       CategorySingle

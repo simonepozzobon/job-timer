@@ -42498,17 +42498,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
+        var vue = this;
         this.categories = this.main_categoriesParsed;
 
         this.$parent.$on('project-selected', function (project) {
-            if (project.categories.lenght > 0) {
-                this.categories = project.categories;
-            } else {
-                this.categories = [];
-            }
+            vue.changeProject(project);
         });
     },
 
+    methods: {
+        changeProject: function changeProject(project) {
+            this.categories = project.categories;
+        }
+    },
     components: {
         CategorySingle: __WEBPACK_IMPORTED_MODULE_0__CategorySingle_vue___default.a
     }
@@ -42820,6 +42822,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42875,28 +42886,96 @@ var render = function() {
         _c("hr"),
         _vm._v(" "),
         _c("stat-single", { attrs: { title: "Data Inizio Progetto:" } }, [
-          _vm._v("\n      02/10/17\n    ")
+          _vm._v(
+            "\n      " +
+              _vm._s(_vm.projectSelected.stats.project_start) +
+              "\n    "
+          )
         ]),
         _vm._v(" "),
-        _c("stat-single", { attrs: { title: "In Giorni:" } }, [
-          _vm._v("\n      15 giorni\n    ")
+        _c("stat-single", { attrs: { title: "Giorni dall'inizio:" } }, [
+          _vm._v(
+            "\n      " +
+              _vm._s(_vm.projectSelected.stats.days_from_start) +
+              "\n    "
+          )
         ]),
         _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Lavoro Effettivo:" } }, [
-          _vm._v("\n      00:10:11\n    ")
-        ]),
+        _c(
+          "stat-single",
+          { staticClass: "pt-4", attrs: { title: "Lavoro Effettivo:" } },
+          [
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.projectSelected.stats.global_time) +
+                "\n    "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Task Attivi:" } }, [
-          _vm._v("\n      15\n    ")
-        ]),
+        _c(
+          "stat-single",
+          { staticClass: "pt-4", attrs: { title: "Task Attivi:" } },
+          [
+            _vm._v(
+              "\n      " + _vm._s(_vm.projectSelected.stats.actives) + "\n    "
+            )
+          ]
+        ),
         _vm._v(" "),
         _c("stat-single", { attrs: { title: "Task Completati:" } }, [
-          _vm._v("\n      10\n    ")
+          _vm._v(
+            "\n      " + _vm._s(_vm.projectSelected.stats.completed) + "\n    "
+          )
         ]),
         _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Tempo Medio Task Completo:" } }, [
-          _vm._v("\n      00:10:11\n    ")
-        ])
+        _c("stat-single", { attrs: { title: "Task Totali:" } }, [
+          _vm._v(
+            "\n      " + _vm._s(_vm.projectSelected.stats.total) + "\n    "
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "stat-single",
+          {
+            staticClass: "pt-4",
+            attrs: { title: "Tempo Medio Task Completo:" }
+          },
+          [
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.projectSelected.stats.average_time) +
+                "\n    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "stat-single",
+          {
+            staticClass: "pt-4",
+            attrs: { title: "Tempo al Completamento (stima):" }
+          },
+          [
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.projectSelected.stats.time_to_complete) +
+                "\n    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "stat-single",
+          { attrs: { title: "Data del Completamento (stima):" } },
+          [
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.projectSelected.stats.date_to_complete) +
+                "\n    "
+            )
+          ]
+        )
       ],
       1
     )

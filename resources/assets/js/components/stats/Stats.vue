@@ -4,22 +4,31 @@
       <h2>Statistiche - {{projectSelected.title}}</h2>
       <hr>
       <stat-single title="Data Inizio Progetto:">
-        02/10/17
+        {{projectSelected.stats.project_start}}
       </stat-single>
-      <stat-single title="In Giorni:">
-        15 giorni
+      <stat-single title="Giorni dall'inizio:">
+        {{projectSelected.stats.days_from_start}}
       </stat-single>
-      <stat-single title="Lavoro Effettivo:">
-        00:10:11
+      <stat-single title="Lavoro Effettivo:" class="pt-4">
+        {{projectSelected.stats.global_time}}
       </stat-single>
-      <stat-single title="Task Attivi:">
-        15
+      <stat-single title="Task Attivi:" class="pt-4">
+        {{projectSelected.stats.actives}}
       </stat-single>
       <stat-single title="Task Completati:">
-        10
+        {{projectSelected.stats.completed}}
       </stat-single>
-      <stat-single title="Tempo Medio Task Completo:">
-        00:10:11
+      <stat-single title="Task Totali:">
+        {{projectSelected.stats.total}}
+      </stat-single>
+      <stat-single title="Tempo Medio Task Completo:" class="pt-4">
+        {{projectSelected.stats.average_time}}
+      </stat-single>
+      <stat-single title="Tempo al Completamento (stima):" class="pt-4">
+        {{projectSelected.stats.time_to_complete}}
+      </stat-single>
+      <stat-single title="Data del Completamento (stima):">
+        {{projectSelected.stats.date_to_complete}}
       </stat-single>
     </div>
   </div>
