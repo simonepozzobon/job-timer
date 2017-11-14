@@ -17,30 +17,35 @@ class TodoController extends Controller
     //     $this->middleware('auth');
     // }
 
-    public function create (Request $request)
+    public function create(Request $request)
     {
         $todo = new Todo;
         $todo->project_id = $request->project_id;
+        $todo->category_id = $request->category;
         $todo->status_id = $request->status;
         $todo->priority_id = $request->priority;
         $todo->description = $request->description;
         $todo->save();
 
-        $dt = new Carbon($todo->created_at);
-        $todo->time = $dt->diffForHumans();
+        $todo->verify_category();
+        $todo->set_time();
 
         return response()->json([
           $todo
         ], 200);
     }
 
-    public function update (Request $request)
+    public function update(Request $request)
     {
         $todo = Todo::find($request->id);
+        $todo->category_id = $request->category;
         $todo->description = $request->description;
         $todo->priority_id = $request->priority;
         $todo->status_id = $request->status;
         $todo->save();
+
+        $todo->verify_category();
+        $todo->set_time();
 
         return response()->json([
           $todo

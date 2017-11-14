@@ -4,22 +4,20 @@
     <h2 v-else>{{projectSelected.title}} - Archivio</h2>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary" @click="newTodo"><i class="fa fa-file-o"></i> Nuovo</button>
+        <button class="btn btn-primary" @click="newTodo"><i class="fa fa-file"></i> Nuovo</button>
+        <button class="btn btn-primary" @click="newCategory"><i class="fa fa-bookmark"></i> Nuova Categoria</button>
         <button class="btn btn-secondary" @click="toggleArchive"><i class="fa fa-archive"></i> Archivio</button>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <todo-new :project="project" :statuses="statusesParsed" :priorities="prioritiesParsed">
-        </todo-new>
-      </div>
-    </div>
+    <todo-new :project="projectSelected" :statuses="statusesParsed" :priorities="prioritiesParsed"></todo-new>
+    <category-new :project="projectSelected"></category-new>
     <draggable v-model="todos" @end="updateTodo">
       <todo-single
         v-for="todo in todos"
         :todo="todo"
         :statuses="statusesParsed"
         :priorities="prioritiesParsed"
+        :categories="projectSelected.categories"
         :key="todo.key"
       ></todo-single>
     </draggable>
@@ -33,6 +31,7 @@ import axios from 'axios'
 
 import TodoSingle from './TodoSingle.vue'
 import TodoNew from './TodoNew.vue'
+import CategoryNew from '../categories/CategoryNew.vue'
 
 export default {
   name: "todo",
@@ -66,14 +65,13 @@ export default {
       this.archived = this.projectSelected.archived_todos;
 
       this.$parent.$on('project-selected', function(project){
-          console.log('cambiato ', project);
           vue.projectSelected = project;
           vue.todos = project.todos;
           vue.archived = project.archived_todos;
       });
 
       this.$on('new-todo', function(data) {
-          vue.todos.push(data[0]);
+          vue.addTodo(data[0]);
       });
 
       this.$on('todo-deleted', function(id) {
@@ -91,6 +89,16 @@ export default {
 
   },
   methods: {
+    addTodo(todo)
+    {
+        console.log(todo);
+        if (this.archive) {
+          this.cache.push(todo);
+        } else {
+          this.todos.push(todo);
+        }
+    },
+
     deleteTodo(id)
     {
         this.todos = this.todos.filter(function(value) {
@@ -167,10 +175,16 @@ export default {
     {
         this.$emit('show-new-todo');
     },
+
+    newCategory()
+    {
+        this.$emit('show-new-category');
+    },
   },
   components: {
     TodoSingle,
     TodoNew,
+    CategoryNew,
     draggable,
   }
 }

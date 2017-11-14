@@ -2,20 +2,29 @@
   <div id="" class="draggable">
     <hr>
     <div class="row align-items-center" ref="edit" @click="edit">
-      <div :class="'col-md-2 text-center bg-'+priority.color_class">
-        {{priority.title}}
+      <div :class="'col-md-1 text-center bg-'+priority.color_class">
+        <small>{{priority.title}}</small>
       </div>
       <div class="col-md-2 text-center">
-        {{todo.time}}
+        <small>{{todo.time}}</small>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         {{todo.description}}
       </div>
-      <div :class="'col-md-2 text-center bg-'+status.color_class">
-        {{status.name}}
+      <div :class="'col-md-1 text-center bg-'+status.color_class">
+        <small>{{status.name}}</small>
+      </div>
+      <div v-if="timer_status" class="col-md-2 text-center bg-green">
+        {{timer}}
+      </div>
+      <div v-else-if="timer" class="col-md-2 text-center bg-yellow">
+        {{timer}}
+      </div>
+      <div v-else class="col-md-2 text-center">
       </div>
       <div class="col-md-2 text-center">
-        {{timer}}
+        <span v-if="todo.category">{{todo.category.title}}</span>
+        <span v-else></span>
       </div>
     </div>
     <div id="tools" class="row justify-content-center" ref="tools">
@@ -36,25 +45,44 @@
         <button class="btn btn-secondary" @click="close"><i class="fa fa-times"></i></button>
       </div>
     </div>
-    <div id="update" class="row" ref="update">
-      <div class="col-md-3">
-        <select class="form-control" name="status" v-model="todo_priority">
-          <option v-for="priority in priorities" :value="priority.id">{{priority.title}}</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <textarea name="description" class="form-control" v-model="todo_description"></textarea>
+    <div id="update" ref="update" class="row">
+      <div class="col">
+        <div class="close mb-2">
+          <button class="btn" @click="close"><i class="fa fa-times"></i></button>
         </div>
-      </div>
-      <div class="col-md-3">
-        <select class="form-control" name="status" v-model="todo_status">
-          <option v-for="status in statuses" :value="status.id">{{status.name}}</option>
-        </select>
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" @click="sendUpdate"><i class="fa fa-floppy-o"></i></button>
-        <button class="btn btn-secondary" @click="close"><i class="fa fa-times"></i></button>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <select class="form-control" name="status" v-model="todo_category">
+                <option v-for="category in categories" :value="category.id">{{category.title}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-md-6">
+            <select class="form-control" name="status" v-model="todo_priority">
+              <option v-for="priority in priorities" :value="priority.id">{{priority.title}}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <select class="form-control" name="status" v-model="todo_status">
+              <option v-for="status in statuses" :value="status.id">{{status.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col">
+            <div class="form-group">
+              <textarea name="description" class="form-control" v-model="todo_description"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-2 justify-content-center">
+          <div class="col-md-6">
+            <button class="btn btn-primary" @click="sendUpdate"><i class="fa fa-floppy-o"></i> Salva</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,7 +93,7 @@ import {TweenMax, Power4, TimelineMax} from 'gsap'
 
 export default {
   name: "todo-single",
-  props: ['todo', 'statuses', 'priorities', 'order'],
+  props: ['todo', 'statuses', 'priorities', 'categories'],
   computed: {
     status: function()
     {
@@ -78,6 +106,13 @@ export default {
     {
         var vue = this;
         return _.find(this.priorities, function(r) {
+            return r.id == vue.todo.priority_id;
+        });
+    },
+    category: function()
+    {
+        var vue = this;
+        return _.find(this.categories, function(r) {
             return r.id == vue.todo.priority_id;
         });
     },
@@ -96,13 +131,14 @@ export default {
     todo_description: '',
     todo_status: '',
     todo_priority: '',
+    todo_category: '',
     timer_status: '',
   }),
   mounted() {
       this.todo_description = this.todo.description;
       this.todo_priority = this.todo.priority_id;
       this.todo_status = this.todo.status_id;
-
+      this.todo_category = this.todo.category_id;
 
   },
   methods: {
@@ -127,7 +163,7 @@ export default {
       {
           var vue = this;
           var formData = new FormData();
-          formData.append('id', 1);
+          formData.append('id', this.todo.timer.status.id);
 
           axios.post('/api/v1/timer/pause', formData)
           .then(function(response) {
@@ -185,6 +221,7 @@ export default {
           var vue = this;
           var formData = new FormData();
           formData.append('id', this.todo.id);
+          formData.append('category', this.todo_category);
           formData.append('description', this.todo_description);
           formData.append('priority', this.todo_priority);
           formData.append('status', this.todo_status);
@@ -195,6 +232,7 @@ export default {
             vue.todo.description = vue.todo_description;
             vue.todo.priority_id = vue.todo_priority;
             vue.todo.status_id = vue.todo_status;
+            vue.todo.category_id = vue.todo_category;
             vue.close();
           })
           .catch(function(errors) {

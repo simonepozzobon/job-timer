@@ -24,6 +24,42 @@ class Todo extends Model
         return $this->hasMany('App\Timer');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
+    public function verify_category()
+    {
+        $project = Project::find($this->project_id);
+        $categories = $project->categories()->count();
+
+        if ($categories > 0) {
+          if ($this->category_id == null) {
+            $this->category_id == $project->categories()->first()->id;
+            $this->save();
+          }
+          return true;
+        } else {
+          return false;
+        }
+    }
+
+    public function set_time()
+    {
+      $dt = new Carbon($this->created_at);
+      $this->time = $dt->diffForHumans();
+
+      // Verifica se ha un timer attivo
+      $timer = [
+        'status' => $this->has_active_timer(),
+        'time' => $this->calculate_timer()
+      ];
+      $this->timer = $timer;
+
+      return $this;
+    }
+
     public function has_active_timer()
     {
         $timer = $this->timers()->where('active', '=', 1)->first();

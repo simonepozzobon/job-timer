@@ -35,6 +35,6 @@ class TimerController extends Controller
         $timer->time = gmdate('H:i:s', $difference_in_seconds);
         $timer->save();
 
-        return response()->json([$request->all()], 200);
+        return response()->json([$request->id], 200);
     }
 }

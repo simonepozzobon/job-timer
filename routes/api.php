@@ -23,6 +23,8 @@ Route::prefix('v1')->group(function() {
     Route::post('/todo/unarchive', 'TodoController@unarchive');
     Route::post('/todo/order', 'TodoController@order');
 
+    Route::post('/todo/category/new', 'CategoryController@create');
+
     Route::post('/timer/play', 'TimerController@play');
     Route::post('/timer/pause', 'TimerController@pause');
 
