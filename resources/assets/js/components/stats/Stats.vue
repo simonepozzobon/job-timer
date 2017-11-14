@@ -3,33 +3,7 @@
     <div class="col">
       <h2>Statistiche - {{projectSelected.title}}</h2>
       <hr>
-      <stat-single title="Data Inizio Progetto:">
-        {{projectSelected.stats.project_start}}
-      </stat-single>
-      <stat-single title="Giorni dall'inizio:">
-        {{projectSelected.stats.days_from_start}}
-      </stat-single>
-      <stat-single title="Lavoro Effettivo:" class="pt-4">
-        {{projectSelected.stats.global_time}}
-      </stat-single>
-      <stat-single title="Task Attivi:" class="pt-4">
-        {{projectSelected.stats.actives}}
-      </stat-single>
-      <stat-single title="Task Completati:">
-        {{projectSelected.stats.completed}}
-      </stat-single>
-      <stat-single title="Task Totali:">
-        {{projectSelected.stats.total}}
-      </stat-single>
-      <stat-single title="Tempo Medio Task Completo:" class="pt-4">
-        {{projectSelected.stats.average_time}}
-      </stat-single>
-      <stat-single title="Tempo al Completamento (stima):" class="pt-4">
-        {{projectSelected.stats.time_to_complete}}
-      </stat-single>
-      <stat-single title="Data del Completamento (stima):">
-        {{projectSelected.stats.date_to_complete}}
-      </stat-single>
+      <stat-single v-for="stat in projectSelected.stats" :key="stat.key" :stat="stat"></stat-single>
     </div>
   </div>
 </template>
@@ -40,7 +14,7 @@ export default {
   name: "stats",
   props: ['project'],
   data: () => ({
-    projectSelected: ''
+    projectSelected: '',
   }),
   computed: {
       projectParsed: function()
@@ -51,6 +25,7 @@ export default {
   mounted() {
     var vue = this;
     this.projectSelected = this.projectParsed;
+    console.log(this.projectSelected);
 
     this.$parent.$on('project-selected', function(project) {
       vue.changeProject(project);

@@ -42813,32 +42813,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -42858,6 +42832,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     var vue = this;
     this.projectSelected = this.projectParsed;
+    console.log(this.projectSelected);
 
     this.$parent.$on('project-selected', function (project) {
       vue.changeProject(project);
@@ -42893,99 +42868,11 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Data Inizio Progetto:" } }, [
-          _vm._v(
-            "\n      " +
-              _vm._s(_vm.projectSelected.stats.project_start) +
-              "\n    "
-          )
-        ]),
-        _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Giorni dall'inizio:" } }, [
-          _vm._v(
-            "\n      " +
-              _vm._s(_vm.projectSelected.stats.days_from_start) +
-              "\n    "
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "stat-single",
-          { staticClass: "pt-4", attrs: { title: "Lavoro Effettivo:" } },
-          [
-            _vm._v(
-              "\n      " +
-                _vm._s(_vm.projectSelected.stats.global_time) +
-                "\n    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "stat-single",
-          { staticClass: "pt-4", attrs: { title: "Task Attivi:" } },
-          [
-            _vm._v(
-              "\n      " + _vm._s(_vm.projectSelected.stats.actives) + "\n    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Task Completati:" } }, [
-          _vm._v(
-            "\n      " + _vm._s(_vm.projectSelected.stats.completed) + "\n    "
-          )
-        ]),
-        _vm._v(" "),
-        _c("stat-single", { attrs: { title: "Task Totali:" } }, [
-          _vm._v(
-            "\n      " + _vm._s(_vm.projectSelected.stats.total) + "\n    "
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "stat-single",
-          {
-            staticClass: "pt-4",
-            attrs: { title: "Tempo Medio Task Completo:" }
-          },
-          [
-            _vm._v(
-              "\n      " +
-                _vm._s(_vm.projectSelected.stats.average_time) +
-                "\n    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "stat-single",
-          {
-            staticClass: "pt-4",
-            attrs: { title: "Tempo al Completamento (stima):" }
-          },
-          [
-            _vm._v(
-              "\n      " +
-                _vm._s(_vm.projectSelected.stats.time_to_complete) +
-                "\n    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "stat-single",
-          { attrs: { title: "Data del Completamento (stima):" } },
-          [
-            _vm._v(
-              "\n      " +
-                _vm._s(_vm.projectSelected.stats.date_to_complete) +
-                "\n    "
-            )
-          ]
-        )
+        _vm._l(_vm.projectSelected.stats, function(stat) {
+          return _c("stat-single", { key: stat.key, attrs: { stat: stat } })
+        })
       ],
-      1
+      2
     )
   ])
 }
@@ -43110,7 +42997,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "stat-single",
-  props: ['title'],
+  props: ['stat'],
   data: function data() {
     return {};
   }
@@ -43126,10 +43013,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row", attrs: { id: "stat-single" } }, [
     _c("div", { staticClass: "col-md-6" }, [
-      _vm._v("\n      " + _vm._s(_vm.title) + "\n    ")
+      _vm._v("\n      " + _vm._s(_vm.stat.title) + "\n    ")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-6" }, [_vm._t("default")], 2)
+    _c("div", { staticClass: "col-md-6" }, [
+      _vm._v("\n      " + _vm._s(_vm.stat.value) + "\n    ")
+    ])
   ])
 }
 var staticRenderFns = []

@@ -1,17 +1,17 @@
 <template>
   <div id="stat-single" class="row">
       <div class="col-md-6">
-        {{title}}
+        {{stat.title}}
       </div>
       <div class="col-md-6">
-        <slot></slot>
+        {{stat.value}}
       </div>
   </div>
 </template>
 <script>
 export default {
   name: "stat-single",
-  props: ['title'],
+  props: ['stat'],
   data: () => ({
 
   })

@@ -82,7 +82,6 @@ class Project extends Model
             $time_to_complete = gmdate('H:i:s', $time_to_complete_in_seconds);
 
             $dtc = $now->addSeconds($time_to_complete_in_seconds);
-            // $dtc_timestamp = $dtc->hour.':'.$dtc->minute.':'.$dtc->second;
             $date_to_complete = $dtc->day.'/'.$dtc->month.'/'.$dtc->year.' - '.gmdate('H:i:s', $dtc->timestamp);
           } else {
             $time_to_complete = 'Non calcolabile';
@@ -96,15 +95,51 @@ class Project extends Model
         }
 
         return $this->stats = [
-          'project_start' => $project_start,
-          'days_from_start' => $days_from_start,
-          'global_time' => $global_time,
-          'completed' => $completed->count(),
-          'actives' => $actives->count(),
-          'total' => $todos->count(),
-          'average_time' => $average_time,
-          'time_to_complete' => $time_to_complete,
-          'date_to_complete' => $date_to_complete
+          // project_start
+          [
+            'title' => 'Data Inizio Progetto:',
+            'value' => $project_start,
+          ],
+          // days_from_start
+          [
+            'title' => 'Giorni dall\'inizio:',
+            'value' => $days_from_start,
+          ],
+          // global_time
+          [
+            'title' => 'Lavoro Effettivo:',
+            'value' => $global_time,
+          ],
+          // actives
+          [
+            'title' => 'Task Attivi:',
+            'value' => $actives->count(),
+          ],
+          // completed
+          [
+            'title' => 'Task Completati:',
+            'value' => $completed->count(),
+          ],
+          // total
+          [
+            'title' => 'Task Totali:',
+            'value' => $todos->count(),
+          ],
+          // average_time
+          [
+            'title' => 'Tempo Medio Task Completo:',
+            'value' => $average_time,
+          ],
+          // time_to_complete
+          [
+            'title' => 'Tempo al Completamento (stima):',
+            'value' => $time_to_complete,
+          ],
+          // date_to_complete
+          [
+            'title' => 'Data del Completamento (stima):',
+            'value' => $date_to_complete
+          ],
         ];
     }
 }
