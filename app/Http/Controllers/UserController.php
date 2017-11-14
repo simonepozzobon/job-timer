@@ -24,7 +24,7 @@ class UserController extends Controller
         $statuses = TodoStatus::all();
         $priorities = Priority::all();
 
-        $projects = Project::where('user_id', '=', $id)->with('todos', 'todos.category', 'archived_todos', 'archived_todos.category', 'categories')->get();
+        $projects = Project::where('user_id', '=', $id)->with('todos', 'todos.category', 'archived_todos', 'archived_todos.category', 'categories', 'user')->get();
 
         foreach ($projects as $key => $project) {
             $project->stats();

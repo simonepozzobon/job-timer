@@ -1,9 +1,11 @@
 <template>
-  <div id="projects">
-    <h2>Progetti</h2>
-    <hr>
-    <project-single v-for="project in projectsParsed" :key="project.key" :project="project">
-    </project-single>
+  <div id="projects" class="row pt-4">
+    <div class="col">
+      <h2>Progetti</h2>
+      <hr>
+      <project-single v-for="project in projectsParsed" :key="project.key" :project="project">
+      </project-single>
+    </div>
   </div>
 </template>
 <script>

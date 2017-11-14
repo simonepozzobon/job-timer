@@ -27,6 +27,11 @@ class Project extends Model
         return $this->hasMany('App\Todo')->where('archived', '=', 1)->orderBy('order');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function stats()
     {
         // prendo tutti i todo

@@ -11,6 +11,7 @@
       ></todo>
     </div>
     <div class="col-md-4">
+      <users project="{{ json_encode($main_project) }}"></users>
       <projects projects="{{ json_encode($projects) }}"></projects>
       <categories main_categories="{{ $main_project->categories }}"></categories>
       <stats project="{{ json_encode($main_project) }}"></stats>
