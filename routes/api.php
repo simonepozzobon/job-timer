@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 Route::prefix('v1')->group(function() {
 
+    Route::get('/projects', 'Api\ProjectController@get_projects');
+
     Route::post('/todo/add', 'TodoController@create');
     Route::post('/todo/destroy', 'TodoController@destroy');
     Route::post('/todo/update', 'TodoController@update');
