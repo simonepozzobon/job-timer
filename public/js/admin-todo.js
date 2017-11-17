@@ -51675,6 +51675,8 @@ exports.push([module.i, "\n.row[data-v-2710c8a3] {\n  cursor: pointer;\n}\n#tool
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gsap__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gsap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_gsap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 //
 //
 //
@@ -51693,58 +51695,75 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "project-single",
-  props: ['project'],
-  data: function data() {
-    return {};
-  },
-  methods: {
-    select: function select() {
-      this.$parent.$parent.$emit('project-selected', this.project);
-      this.close();
+    name: "project-single",
+    props: ['project'],
+    data: function data() {
+        return {};
     },
-    tools: function tools() {
-      var master = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
-      var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
-      t1.to(this.$refs.project, .4, {
-        opacity: 0,
-        display: 'none'
-      });
+    methods: {
+        select: function select() {
+            this.$parent.$parent.$emit('project-selected', this.project);
+            this.close();
+        },
+        set_main: function set_main() {
+            var vue = this;
 
-      var t2 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
-      t2.to(this.$refs.tools, .4, {
-        opacity: 1,
-        display: 'flex'
-      });
+            this.$parent.$parent.$emit('project-selected', this.project);
 
-      master.add(t1);
-      master.add(t2, .4);
-      master.play();
-    },
-    close: function close() {
-      var master = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
-      var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+            var formData = new FormData();
+            formData.append('id', this.project.id);
 
-      t1.to(this.$refs.project, .4, {
-        opacity: 1,
-        display: 'flex'
-      });
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/api/v1/projects/set-main', formData).then(function (response) {
+                vue.close();
+            }).then(function (errors) {
+                console.log(errors);
+            });
+        },
+        tools: function tools() {
+            var master = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+            var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+            t1.to(this.$refs.project, .4, {
+                opacity: 0,
+                display: 'none'
+            });
 
-      var t2 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
-      t2.to(this.$refs.tools, .4, {
-        opacity: 0,
-        display: 'none'
-      });
+            var t2 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+            t2.to(this.$refs.tools, .4, {
+                opacity: 1,
+                display: 'flex'
+            });
 
-      master.add(t2);
-      master.add(t1, .4);
-      master.play();
+            master.add(t1);
+            master.add(t2, .4);
+            master.play();
+        },
+        close: function close() {
+            var master = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+            var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+
+            t1.to(this.$refs.project, .4, {
+                opacity: 1,
+                display: 'flex'
+            });
+
+            var t2 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+            t2.to(this.$refs.tools, .4, {
+                opacity: 0,
+                display: 'none'
+            });
+
+            master.add(t2);
+            master.add(t1, .4);
+            master.play();
+        }
     }
-  }
 });
 
 /***/ }),
@@ -51766,7 +51785,12 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "col" }, [
-          _vm._v("\n      " + _vm._s(_vm.project.title) + "\n    ")
+          _vm.project.is_main == 1
+            ? _c("span", [
+                _vm._v(_vm._s(_vm.project.title) + " "),
+                _c("i", { staticClass: "fa fa-star" })
+              ])
+            : _c("span", [_vm._v(_vm._s(_vm.project.title))])
         ])
       ]
     ),
@@ -51784,6 +51808,12 @@ var render = function() {
             "button",
             { staticClass: "btn btn-success", on: { click: _vm.select } },
             [_c("i", { staticClass: "fa fa-check" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-yellow", on: { click: _vm.set_main } },
+            [_c("i", { staticClass: "fa fa-star-o" })]
           ),
           _vm._v(" "),
           _vm._m(0),

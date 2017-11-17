@@ -16,17 +16,27 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function() {
 
     Route::get('/projects', 'Api\ProjectController@get_projects');
+    Route::post('/projects/set-main', 'Api\ProjectController@set_main');
 
-    Route::post('/todo/add', 'TodoController@create');
-    Route::post('/todo/destroy', 'TodoController@destroy');
-    Route::post('/todo/update', 'TodoController@update');
 
-    Route::post('/todo/archive', 'TodoController@archive');
-    Route::post('/todo/unarchive', 'TodoController@unarchive');
-    Route::post('/todo/order', 'TodoController@order');
+    //
+    // TODOS
+    //
+    Route::prefix('todo')->group(function() {
+      Route::post('/add', 'TodoController@create');
+      Route::post('/destroy', 'TodoController@destroy');
+      Route::post('/update', 'TodoController@update');
 
-    Route::post('/todo/category/new', 'CategoryController@create');
+      Route::post('/archive', 'TodoController@archive');
+      Route::post('/unarchive', 'TodoController@unarchive');
+      Route::post('/order', 'TodoController@order');
 
+      Route::post('/category/new', 'CategoryController@create');
+    });
+
+    //
+    // TIMERS
+    //
     Route::post('/timer/play', 'TimerController@play');
     Route::post('/timer/pause', 'TimerController@pause');
 

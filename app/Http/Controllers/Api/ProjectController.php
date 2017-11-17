@@ -20,4 +20,23 @@ class ProjectController extends Controller
 
       return response($projects, 200)->header('Content-Type', 'application/json');
     }
+
+    public function set_main(Request $request)
+    {
+      $previous_main = Project::where('is_main', '=', 1)->first();
+      $project = Project::find($request->id);
+
+      // resetto il principale
+      $previous_main->is_main = 0;
+      $previous_main->save();
+
+      // setto il nuovo principale
+      $project->is_main = 1;
+      $project->save();
+
+      return response()->json([
+        'success' => true,
+        'project' => $project,
+      ], 200);
+    }
 }
