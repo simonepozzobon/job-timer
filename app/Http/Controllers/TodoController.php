@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Todo;
-use App\Test;
 use App\Project;
 use App\UserRole;
 use Carbon\Carbon;
@@ -20,11 +19,6 @@ class TodoController extends Controller
 
     public function create(Request $request)
     {
-        $test = new Test;
-        $test->test = json_encode($request->all());
-        $test->save();
-        
-
         $todo = new Todo;
         $todo->project_id = $request->project_id;
         $todo->category_id = $request->category;

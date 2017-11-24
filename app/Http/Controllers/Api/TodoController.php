@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Test;
 use App\Todo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
