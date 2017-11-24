@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import Resource from 'vue-resource'
-import http from 'http'
+const http = require('http')
 
 Vue.use(Resource);
 Vue.http.options.emulateJSON = true
 
 import Panel from './components/views/Panel.vue'
-
-
 
 new Vue({
   'el': '#app',

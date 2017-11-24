@@ -16,6 +16,18 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function() {
 
     Route::get('/projects', 'Api\ProjectController@get_projects');
+
+    //
+    // App
+    //
+    Route::prefix('project')->group(function(){
+      Route::post('/create-new-category', 'CategoryController@create_from_json');
+      Route::post('/todo/add', 'Api\TodoController@create');
+      Route::get('/{id}', 'Api\ProjectController@get_project');
+      Route::get('/{id}/get-options', 'Api\ProjectController@get_project_options');
+    });
+
+
     Route::post('/projects/set-main', 'Api\ProjectController@set_main');
 
 

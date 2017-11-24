@@ -16,9 +16,31 @@ class ProjectController extends Controller
 {
     public function get_projects()
     {
-      $projects = Project::with('todos', 'todos.category', 'archived_todos', 'archived_todos.category', 'categories', 'user')->get();
+      $projects = Project::all();
 
       return response($projects, 200)->header('Content-Type', 'application/json');
+    }
+
+    public function get_project($id)
+    {
+      $project = Project::where('id', '=', $id)->with('todos', 'todos.category', 'todos.priority', 'archived_todos', 'archived_todos.category', 'categories', 'user')->first();
+
+      return response($project, 200)->header('Content-Type', 'application/json');
+    }
+
+    public function get_project_options($id)
+    {
+      $project = Project::where('id', '=', $id)->with('categories')->first();
+      $priorities = Priority::all();
+      $statuses = TodoStatus::all();
+
+      $options = [
+        'categories' => $project->categories()->get(),
+        'priorities' => $priorities,
+        'statuses' => $statuses
+      ];
+
+      return response($options, 200)->header('Content-Type', 'application/json');
     }
 
     public function set_main(Request $request)

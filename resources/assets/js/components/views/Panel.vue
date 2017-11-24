@@ -23,6 +23,8 @@ import Projects from '../projects/Projects.vue'
 import Categories from '../categories/Categories.vue'
 import Stats from '../stats/Stats.vue'
 
+import axios from 'axios'
+
 export default {
   name: "panel",
   props: ['main_project', 'projects', 'statuses', 'priorities'],
@@ -45,11 +47,28 @@ export default {
     this.$on('project-selected', function(project) {
         vue.changeProject(project);
     });
+
+    // this.test_request();
   },
   methods: {
       init()
       {
           this.$emit('project-selected', this.main_projectParsed);
+      },
+
+      test_request()
+      {
+        axios.post('http://192.168.1.3:80/api/v1/project/todo/add',
+          {
+            'project_id': 1,
+            'category': 1,
+            'priority': 1,
+            'status': 1,
+            'description': 'fadasfdsafasdf',
+          }
+        ).then(response => {
+          console.log(response);
+        })
       },
 
       changeProject(project) {

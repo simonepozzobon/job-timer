@@ -24,7 +24,7 @@ class Project extends Model
 
     public function archived_todos()
     {
-        return $this->hasMany('App\Todo')->where('archived', '=', 1)->orderBy('order');
+        return $this->hasMany('App\Todo')->where('archived', '=', 1)->with('priority', 'category')->orderBy('order');
     }
 
     public function user()
