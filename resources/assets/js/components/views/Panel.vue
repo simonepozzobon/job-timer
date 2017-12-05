@@ -1,18 +1,18 @@
 <template>
   <div id="panel" class="row">
-    <div class="col-md-8">
+    <div class="col">
       <todo
         :project="project"
         :statuses="statuses"
         :priorities="priorities"
       ></todo>
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <users :project="project"></users>
       <projects :projects="projects"></projects>
       <categories :main_categories="categories"></categories>
       <stats :project="project"></stats>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

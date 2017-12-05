@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 v-if="!this.archive">{{projectSelected.title}}</h2>
-    <h2 v-else>{{projectSelected.title}} - Archivio</h2>
+    <!-- <h2 v-if="!this.archive">{{projectSelected.title}}</h2>
+    <h2 v-else>{{projectSelected.title}} - Archivio</h2> -->
     <div class="row">
       <div class="col">
         <button class="btn btn-primary" @click="newTodo"><i class="fa fa-file"></i> Nuovo</button>
