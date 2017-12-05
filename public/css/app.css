@@ -10949,6 +10949,27 @@ a.text-blue:hover {
   background-color: #ebedf4;
 }
 
+#main-menu > .right-menu-bg {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  background-color: #007bff;
+  margin-left: auto;
+}
+
+#main-menu > .right-menu-bg > .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+#main-menu > .right-menu-bg > .icon > a {
+  color: #ffffff;
+  fill: #ffffff;
+}
+
 #sidebar-menu {
   position: fixed;
   background-color: #2e3039;
@@ -10964,14 +10985,30 @@ a.text-blue:hover {
   width: 4rem;
 }
 
+#sidebar-menu > .navbar-nav > .nav-item {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+}
+
 #sidebar-menu > .navbar-nav > .nav-item > .nav-link {
   color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  line-height: 0;
 }
 
 #sidebar-menu > .navbar-nav > .nav-item > .nav-link > .sidebar-icons {
   fill: #ffffff;
   width: 1.5rem;
   height: 1.5rem;
+}
+
+#sidebar-menu > .navbar-nav > .nav-item.active {
+  background-color: #737373;
 }
 
 /*!

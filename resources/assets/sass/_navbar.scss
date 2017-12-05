@@ -359,19 +359,26 @@
           background-color: $bg_color;
         }
       }
+    }
+  }
 
-      // >.nav-item.active::after {
-      //   content: '';
-      //   position: absolute;
-      //   top: ($spacer / 3) + 0.1;
-      //   right: -($spacer) + 0.1;
-      //   width: $spacer * 2;
-      //   height: $spacer * 2;
-      //   background: $bg_color;
-      //   border-radius: 5%;
-      //   transform: rotate(-45deg);
-      //   z-index: 1;
-      // }
+  >.right-menu-bg {
+    position: relative;
+    width: $spacer * 2;
+    height: $spacer * 2;
+    background-color: $primary;
+    margin-left: auto;
+
+    >.icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      > a {
+        color: $white;
+        fill: $white;
+      }
     }
   }
 }
@@ -387,14 +394,27 @@
 
   >.navbar-nav {
     >.nav-item {
+      position: relative;
+      width: $spacer * 2;
+      height: $spacer * 2;
+
       >.nav-link {
         color: $white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 0;
 
         >.sidebar-icons {
           fill: $white;
           width: $spacer / 4 * 3;
           height: $spacer / 4 * 3;
         }
+      }
+
+      &.active {
+        background-color: darken($white, 55%);
       }
     }
   }
