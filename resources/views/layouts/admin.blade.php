@@ -13,22 +13,18 @@
     </head>
 
     <body>
-      {{-- Menu --}}
-      @include('layouts.admin._menu')
-      @include('layouts.admin._sidebar')
-      
-      {{-- Content --}}
-      <div class="container py-5">
-        @yield('content')
-      </div>
+        @include('layouts.admin._menu')
+        @include('layouts.admin._sidebar')
 
-      {{-- Footer --}}
-      @include('layouts.admin._footer')
+        <div class="container py-5">
+            @yield('content')
+        </div>
 
-      {{-- Scripts --}}
-      <script src="{{ mix('js/manifest.js') }}"></script>
-      <script src="{{ mix('js/vendor.js') }}"></script>
-      <script src="{{ mix('js/app.js') }}"></script>
-      @yield('scripts')
+        @include('layouts.admin._footer')
+
+        <script src="{{ mix('js/manifest.js') }}"></script>
+        <script src="{{ mix('js/vendor.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
+        @yield('scripts')
     </body>
 </html>
