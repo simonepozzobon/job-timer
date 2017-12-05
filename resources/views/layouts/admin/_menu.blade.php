@@ -1,17 +1,18 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ route('home') }}">Simone Pozzobon</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavBar" aria-controls="mainNavBar" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="mainNavBar">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.todo-status.index') }}">Modifica Stati</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.users.index') }}">Utenti</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<div id="main-menu">
+    <div class="logo-bg">
+        <div class="logo"><a href="/home">S</a></div>
+    </div>
+    <nav class="navbar">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+              <a class="nav-link" href="{{ route('admin.todo-status.index') }}">Modifica Stati</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{{ route('admin.users.index') }}">Utenti</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{{ route('admin.users.index') }}">Utenti</a>
+          </li>
+        </ul>
+    </nav>
+</div>

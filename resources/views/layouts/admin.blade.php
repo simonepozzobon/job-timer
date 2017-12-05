@@ -15,7 +15,8 @@
     <body>
       {{-- Menu --}}
       @include('layouts.admin._menu')
-
+      @include('layouts.admin._sidebar')
+      
       {{-- Content --}}
       <div class="container py-5">
         @yield('content')

@@ -11,4 +11,14 @@
 // Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
 
+@import "navbar";
+
+
 @import "node_modules/font-awesome/scss/font-awesome.scss";
+
+@import 'layout';
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}

@@ -22,5 +22,6 @@ mix
       'popper.js/dist/umd/popper.js': ['Popper'],
   })
   .browserSync({
-    browser: 'google chrome'
+    browser: 'google chrome',
+    proxy: 'http://www.myap.dev/'
   });
